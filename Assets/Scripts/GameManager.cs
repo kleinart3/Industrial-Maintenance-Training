@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using Microsoft.MixedReality.Toolkit.UI;
 
 [RequireComponent(typeof(AudioSource))]
 public class GameManager : MonoBehaviour
@@ -13,7 +12,6 @@ public class GameManager : MonoBehaviour
     public AudioClip PumpOff;
     enum Impeller { Open, SemiOpen, Closed };
     public GameObject LiquidFlow1, LiquidFlow2;
-    public PinchSlider viscositySlider;
     public TMP_Text impellerLabel;
     public TMP_Text ViscosityType;
     private float pressureVal;
@@ -101,28 +99,6 @@ public class GameManager : MonoBehaviour
         LiquidFlow1.SetActive(true);
         LiquidFlow2.SetActive(true);
 
-    }
-
-    public void ViscosityChangeCheck()
-    {
-        Debug.Log(viscositySlider.SliderValue);
-        if (viscositySlider.SliderValue >= 0.95f)
-            ViscosityType.text = "Solid";
-        else if (viscositySlider.SliderValue >= 0.75f)
-            ViscosityType.text = "Semi-Solid";
-        else if (viscositySlider.SliderValue >= 0.50f)
-            ViscosityType.text = "Soft Solids";
-        else if (viscositySlider.SliderValue >= 0.05f)
-            ViscosityType.text = "Slurry";
-        else if (viscositySlider.SliderValue < 0.05f)
-            ViscosityType.text = "Clean Liquid";
-
-        if (isPumpRunning)
-        {
-            float ViscosityPressureVal = pressureVal + (viscositySlider.SliderValue * 10f);
-            ViscosityPressureVal = Random.Range(ViscosityPressureVal, ViscosityPressureVal + 3);
-            pressureGauge.UpdateDial(ViscosityPressureVal);
-        }
     }
     // Update is called once per frame
     void Update()

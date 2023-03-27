@@ -1,18 +1,5 @@
 {
   "dependencies": {
-    "com.microsoft.mixedreality.toolkit.examples": "file:MixedReality/com.microsoft.mixedreality.toolkit.examples-2.8.2.tgz",
-    "com.microsoft.mixedreality.toolkit.extensions": "file:MixedReality/com.microsoft.mixedreality.toolkit.extensions-2.8.2.tgz",
-    "com.microsoft.mixedreality.toolkit.figmabridge": "file:MixedReality/com.microsoft.mixedreality.toolkit.figmabridge-0.1.1.tgz",
-    "com.microsoft.mixedreality.toolkit.foundation": "file:MixedReality/com.microsoft.mixedreality.toolkit.foundation-2.8.2.tgz",
-    "com.microsoft.mixedreality.toolkit.standardassets": "file:MixedReality/com.microsoft.mixedreality.toolkit.standardassets-2.8.2.tgz",
-    "com.microsoft.mixedreality.toolkit.tools": "file:MixedReality/com.microsoft.mixedreality.toolkit.tools-2.8.2.tgz",
-    "com.microsoft.mrtk.core": "file:MixedReality/com.microsoft.mrtk.core-3.0.0-pre.12.tgz",
-    "com.microsoft.mrtk.graphicstools.unity": "file:MixedReality/com.microsoft.mrtk.graphicstools.unity-0.4.0.tgz",
-    "com.microsoft.mrtk.spatialmanipulation": "file:MixedReality/com.microsoft.mrtk.spatialmanipulation-3.0.0-pre.12.tgz",
-    "com.microsoft.mrtk.standardassets": "file:MixedReality/com.microsoft.mrtk.standardassets-3.0.0-pre.12.tgz",
-    "com.microsoft.mrtk.uxcomponents": "file:MixedReality/com.microsoft.mrtk.uxcomponents-3.0.0-pre.12.tgz",
-    "com.microsoft.mrtk.uxcomponents.noncanvas": "file:MixedReality/com.microsoft.mrtk.uxcomponents.noncanvas-3.0.0-pre.12.tgz",
-    "com.microsoft.mrtk.uxcore": "file:MixedReality/com.microsoft.mrtk.uxcore-3.0.0-pre.12.tgz",
     "com.unity.collab-proxy": "1.17.1",
     "com.unity.editorcoroutines": "1.0.0",
     "com.unity.feature.development": "1.0.1",
