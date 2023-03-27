@@ -27,11 +27,11 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //viscositySlider.OnValueUpdated.AddListener(delegate { ViscosityChangeCheck(); });
-        viscositySlider.OnInteractionEnded.AddListener(delegate { ViscosityChangeCheck(); });
         //viscositySlider.OnInteractionEnded.AddListener(delegate { ViscosityChangeCheck(); });
         currImpeller = ClosedImpeller;
         impellerLabel.text = "Closed Impeller";
+        OVRInput.SetControllerVibration(1, 1, OVRInput.Controller.RTouch);
+        
     }
     public void ImpellerSwap()
     {
@@ -58,10 +58,24 @@ public class GameManager : MonoBehaviour
             }
         }
     }
+
+    public void PumpTurnOn()
+    {
+        isPumpRunning = true;
+        StartCoroutine(startPump());
+    }
+
+    public void PumpTurnOff()
+    {
+        isPumpRunning = false;
+        audio.clip = PumpOff;
+        audio.loop = false;
+        audio.Play();
+        LiquidFlow1.SetActive(false);
+        LiquidFlow2.SetActive(false);
+    }
     public void PumpAudioController()
     {
-        pressureVal = 55f;
-        pressureGauge.UpdateDial(55f);
         isPumpRunning = !isPumpRunning;
         if (isPumpRunning)
             StartCoroutine(startPump());
@@ -109,26 +123,19 @@ public class GameManager : MonoBehaviour
             ViscosityPressureVal = Random.Range(ViscosityPressureVal, ViscosityPressureVal + 3);
             pressureGauge.UpdateDial(ViscosityPressureVal);
         }
-        //pressureVal = viscositySlider.SliderValue * 10 + pressureVal;
-        //pressureVal = pressureVal * viscositySlider.SliderValue;
-        /*
-        if (viscositySlider.SliderValue > previousPressureVal)
-            pressureVal = viscositySlider.SliderValue * 10 - pressureVal;
-        else
-        {
-            pressureVal = viscositySlider.SliderValue * 10 + pressureVal;
-        }
-        previousPressureVal = viscositySlider.SliderValue;
-        */
     }
     // Update is called once per frame
     void Update()
     {
         if (isPumpRunning)
         {
-            currImpeller.transform.Rotate(0, -500 * Time.deltaTime, 0);
-            //pressureGauge.UpdateDial(pressureVal);
+            currImpeller.transform.Rotate(0, 500 * Time.deltaTime, 0);
         }
 
+    }
+
+    public void XrayMode()
+    {
+        Debug.Log("X-Ray Mode Enabled");
     }
 }

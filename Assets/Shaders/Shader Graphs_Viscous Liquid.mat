@@ -29,9 +29,9 @@ Material:
     - _VoronoiPower: 9
     - _VoronoiScale: 11.06
     m_Colors:
-    - _Base: {r: 0.03819601, g: 0.7830189, b: 0, a: 0.3921569}
+    - _Base: {r: 0, g: 0.78117406, b: 0.8867924, a: 0.3921569}
     - _VornoiSpeed: {r: 0, g: 0.5, b: 0, a: 0}
-    - _Voronoi: {r: 0.1430528, g: 1.435839, b: 0, a: 0.3921569}
+    - _Voronoi: {r: 0, g: 1.8489794, b: 1.9169579, a: 0.3921569}
     - _VoronoiTiling: {r: 1.2, g: 0.6, b: 0, a: 0}
   m_BuildTextureStacks: []
 --- !u!114 &2561089369087057350
