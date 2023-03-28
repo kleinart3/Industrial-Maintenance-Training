@@ -6,30 +6,42 @@ using UnityEngine;
 [RequireComponent(typeof(AudioSource))]
 public class GameManager : MonoBehaviour
 {
+    public static GameManager Instance;
     public AudioSource audio;
     public AudioClip PumpOn;
     public AudioClip PumpRunning;
     public AudioClip PumpOff;
     enum Impeller { Open, SemiOpen, Closed };
-    public GameObject LiquidFlow1, LiquidFlow2;
+    public GameObject LiquidFlow1, LiquidFlow2, LiquidFlow3, LiquidFlow4;
     public TMP_Text impellerLabel;
     public TMP_Text ViscosityType;
     private float pressureVal;
     private float previousPressureVal;
     public PressureEvent pressureGauge;
+    public bool hasFile = false;
 
     public GameObject ClosedImpeller, SemiOpenImpeller;
 
     private GameObject currImpeller;
     private bool isPumpRunning;
+
+    private void Awake()
+    {
+        if (Instance == null)
+            Instance = this;
+    }
     // Start is called before the first frame update
     void Start()
     {
         //viscositySlider.OnInteractionEnded.AddListener(delegate { ViscosityChangeCheck(); });
         currImpeller = ClosedImpeller;
-        impellerLabel.text = "Closed Impeller";
         OVRInput.SetControllerVibration(1, 1, OVRInput.Controller.RTouch);
         
+    }
+
+    public void fileOnOff()
+    {
+        hasFile = !hasFile;
     }
     public void ImpellerSwap()
     {
@@ -71,6 +83,8 @@ public class GameManager : MonoBehaviour
         audio.Play();
         LiquidFlow1.SetActive(false);
         LiquidFlow2.SetActive(false);
+        LiquidFlow3.SetActive(false);
+        LiquidFlow4.SetActive(false);
     }
     public void PumpAudioController()
     {
@@ -98,6 +112,8 @@ public class GameManager : MonoBehaviour
         audio.Play();
         LiquidFlow1.SetActive(true);
         LiquidFlow2.SetActive(true);
+        LiquidFlow3.SetActive(true);
+        LiquidFlow4.SetActive(true);
 
     }
     // Update is called once per frame
