@@ -7,11 +7,24 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
+    public GameObject VertCorrectAlignScreen, VertIncorrectAlignScreen;
+    public GameObject VertIncorrectLine, VertIncorrectSlice, VertCorrectLine, VertCorrectSlice;
+    public GameObject BracketLaserVis1, BracketLaserVis2;
+    public GameObject TabletScreen;
+    public GameObject TabletText1, TabletText2, TabletText3;
+    public GameObject[] XRayObjects;
+    public GameObject Motor;
+    public Material XRayMat;
+    public Material originalMat;
+    public Material HotMat;
     public AudioSource audio;
     public AudioClip PumpOn;
     public AudioClip PumpRunning;
     public AudioClip PumpOff;
     enum Impeller { Open, SemiOpen, Closed };
+    //public GameObject[] ShaftRotateParts;
+    public GameObject Shaft1;
+    public GameObject Shaft2;
     public GameObject LiquidFlow1, LiquidFlow2, LiquidFlow3, LiquidFlow4;
     public TMP_Text impellerLabel;
     public TMP_Text ViscosityType;
@@ -19,11 +32,15 @@ public class GameManager : MonoBehaviour
     private float previousPressureVal;
     public PressureEvent pressureGauge;
     public bool hasFile = false;
+    public bool isHot;
 
     public GameObject ClosedImpeller, SemiOpenImpeller;
 
     private GameObject currImpeller;
     private bool isPumpRunning;
+    private bool isXRayMode = false;
+    private bool isAligned;
+    private bool bracket1, bracket2;
 
     private void Awake()
     {
@@ -33,15 +50,87 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //viscositySlider.OnInteractionEnded.AddListener(delegate { ViscosityChangeCheck(); });
         currImpeller = ClosedImpeller;
-        OVRInput.SetControllerVibration(1, 1, OVRInput.Controller.RTouch);
+        isHot = true;
         
     }
+    public void BracketSnap1()
+    {
+        bracket1 = true;
+        if (bracket2)
+        {
+            TabletScreen.SetActive(true);
+            BracketLaserVis1.SetActive(true);
+            BracketLaserVis2.SetActive(true);
+            TabletText1.SetActive(true);
+            TabletText2.SetActive(true);
+            TabletText3.SetActive(true);
+        }
+    }
 
+    public void BracketSnap2()
+    {
+        bracket2 = true;
+        if (bracket1)
+        {
+            TabletScreen.SetActive(true);
+            BracketLaserVis1.SetActive(true);
+            BracketLaserVis2.SetActive(true);
+            TabletText1.SetActive(true);
+            TabletText2.SetActive(true);
+            TabletText3.SetActive(true);
+        }
+    }
+
+    public void LoseBracket()
+    {
+        TabletScreen.SetActive(false);
+        BracketLaserVis1.SetActive(false);
+        BracketLaserVis2.SetActive(false);
+        TabletText1.SetActive(false);
+        TabletText2.SetActive(false);
+        TabletText3.SetActive(false);
+    }
+    public void ValveOpenClose()
+    {
+        
+    }
     public void fileOnOff()
     {
         hasFile = !hasFile;
+    }
+    public void HasCooled()
+    {
+        isHot = false;
+        if (isXRayMode)
+        {
+            Motor.GetComponent<MeshRenderer>().material = XRayMat;
+        }
+    }
+
+    public void VertAlign()
+    {
+        isAligned = true;
+    }
+
+    public void SetAlignCanvas()
+    {
+        if (isAligned)
+        {
+            VertCorrectAlignScreen.SetActive(true);
+            VertCorrectLine.SetActive(true);
+            VertCorrectSlice.SetActive(true);
+            VertIncorrectLine.SetActive(false);
+            VertIncorrectSlice.SetActive(false);
+        }
+        else
+        {
+            VertIncorrectAlignScreen.SetActive(true);
+            VertCorrectLine.SetActive(false);
+            VertCorrectSlice.SetActive(false);
+            VertIncorrectLine.SetActive(true);
+            VertIncorrectSlice.SetActive(true);
+        }
     }
     public void ImpellerSwap()
     {
@@ -122,12 +211,39 @@ public class GameManager : MonoBehaviour
         if (isPumpRunning)
         {
             currImpeller.transform.Rotate(0, 500 * Time.deltaTime, 0);
+            Shaft1.transform.Rotate(500 * Time.deltaTime, 0, 0);
+            Shaft2.transform.Rotate(0, 500 * Time.deltaTime, 0);
+            //foreach (GameObject go in ShaftRotateParts)
+            //{
+            //    go.transform.Rotate(500 * Time.deltaTime, 0, 0);
+            //}
         }
 
     }
 
     public void XrayMode()
     {
-        Debug.Log("X-Ray Mode Enabled");
+        isXRayMode = !isXRayMode;
+
+        if (isXRayMode)
+        {
+            foreach (GameObject go in XRayObjects)
+            {
+                go.GetComponent<MeshRenderer>().material = XRayMat;
+            }
+            Debug.Log("X-Ray Mode Enabled");
+            if (isHot)
+            {
+                Motor.GetComponent<MeshRenderer>().material = HotMat;
+            }
+        }
+        else
+        {
+            foreach (GameObject go in XRayObjects)
+            {
+                go.GetComponent<MeshRenderer>().material = originalMat;
+            }
+        }
+
     }
 }
